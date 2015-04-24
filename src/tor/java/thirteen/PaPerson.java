@@ -2,6 +2,10 @@ package tor.java.thirteen;
 
 public class PaPerson extends Parser 
 {
+	public final static String FMT_FIO = "F I O";
+	public final static String FMT_IOF = "I O F";
+	public final static String FMT_IO_F = "I O, F";
+	
 	private String _lame; 
 	private String _fame; 
 	private String _pame; 
@@ -19,22 +23,40 @@ public class PaPerson extends Parser
 		return _pame;
 	}
 
-	
 	public PaPerson ()
+	{
+		super();
+	}
+
+	public PaPerson (String aFmt)
+	{
+		super(aFmt);
+	}
+	
+	@Override
+	public void initial()
 	{
 		_lame = null;
 		_fame = null;
 		_pame = null;
 	}
 	
-	public void run(String aText)
+	@Override
+	protected boolean _run(String aText)
 	{
-		mStatusBegin();
-		
-		String[] ss = aText.split(" ", -1);
+		boolean ret = false;
+		String[] ss = aText.split(mDelim, -1);
 		if (ss.length == 3)
 		{
-			
+			if (mFormat.equals(FMT_FIO))
+			{
+				_lame = ss[0];
+				_fame = ss[1];
+				_pame = ss[2];
+				ret = true;
+			}
 		}
+		
+		return ret;
 	}
 }
