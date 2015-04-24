@@ -1,0 +1,186 @@
+package tor.java.thirteen;
+
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import JCommonTools.CC;
+
+/**
+ * Generate hash code for object array.
+ * 
+ * @author M.Tor
+ *
+ */
+public class RecordHash 
+{
+	//private final int DELTA = 31;
+	
+	//private ArrayList<Object> _oa;
+	private String _str;
+	private DecimalFormat _decf;
+	private SimpleDateFormat _datf;
+	private SimpleDateFormat _dtmf;
+	
+	public RecordHash()
+	{
+		//_oa = new ArrayList<Object>();
+		_decf = new DecimalFormat("0.0##");
+		_datf = new SimpleDateFormat("yyyyMMdd");
+		_dtmf = new SimpleDateFormat("yyyyMMddHHmmss");
+		
+		Init();
+	}
+	
+	public void Init()
+	{
+		_str = CC.STR_EMPTY;
+	}
+	
+ 	public void Add(Object obj)
+	{
+ 		if (obj == null)
+ 		{
+ 			return;
+ 		}
+ 		else if (obj.getClass() == String.class)
+		{
+			Add((String)obj);
+		}
+		else if (obj.getClass() == Byte.class)
+		{
+			Add(((Byte)obj).longValue());
+		}
+		else if (obj.getClass() == Short.class)
+		{
+			Add(((Short)obj).longValue());
+		}
+		else if (obj.getClass() == Integer.class)
+		{
+			Add(((Integer)obj).longValue());
+		}
+		else if (obj.getClass() == Long.class)
+		{
+			Add((Long)obj);
+		}
+		else if (obj.getClass() == Float.class)
+		{
+			Add((float)obj);
+		}
+		else if (obj.getClass() == Double.class)
+		{
+			Add((double)obj);
+		}
+		else if (obj.getClass() == Date.class)
+		{
+			Add((Date)obj);
+		}
+		else if (obj.getClass() == Calendar.class)
+		{
+			Add((Calendar)obj);
+		}
+		else if (obj.getClass() == GregorianCalendar.class)
+		{
+			Add((Calendar)obj);
+		}
+	}
+	
+ 	public final String RUS_REPLACE_SYM = "аеЄоpсх";
+ 	public final String ENG_REPLACE_SYM = "aeeopcx";
+ 	
+	/**
+	 * 1	из текста удал€ютс€ символы:
+	 *		пробел, табул€ци€, возврат каретки, перевод каретки,
+	 *		зап€та€, точка, восклицательный и вопросительный знак,
+	 *		дефис, тире, є, {, }, [, ], (, ), У, Ф, \, /, *, +, :, ;
+	 * 2	все буквы перевод€тс€ в нижний регистр
+	 * 3	дл€ букв из кириллицы выполн€ть следующие замены на латиницу
+	 *		а е Є о p с х
+	 *		a e e o p c x
+	 * @param str
+	 */
+	public void Add(String str)
+	{
+		Pattern ptn = Pattern.compile("[\\s\\\\,.!?_\\|\\-є{}\\[\\]\\(\\)\"\'\\/*:;]");
+		Matcher mat = ptn.matcher(str);
+		String res = mat.replaceAll("").toLowerCase();
+		
+		String [] srcChar = {"а","е","Є","о","p","с","х"};
+		String [] tgtChar = {"a","e","e","o","p","c","x"};
+		
+		for (int ii = 0;  ii < srcChar.length; ii++)
+			res = res.replaceAll(srcChar[ii], tgtChar[ii]);
+		
+		_str += res;
+	}
+	
+	/**
+	 * все цифры как есть
+	 * @param ii
+	 */
+	public void Add(long ii)
+	{
+		_str += ii;
+	}
+	
+	/**
+	 * все цифры как есть разделитель дробной части Ц точка
+
+	 * @param dbl
+	 */
+	public void Add(double dbl)
+	{
+		//String[] ss = _df.format(dbl).split(".", -1);
+		//if (ss.length == 2)
+		//	_str += ss[0]+ss[1];
+		//else if (ss.length == 1)
+		//	_str += ss[0];
+		_str += _decf.format(dbl);
+	}
+	
+	/**
+	 * четыре цифры года + две цифры мес€ца + две цифры даты
+	 * ≈сли задано врем€, то плюс
+	 * две цифры часа + две цифры минут + две цифры секунд
+	 *	"yyyyMMdd"
+	 *	"yyyyMMddHHmmss"
+	 *
+	 * @param dt
+	 */
+	public void Add(Date dt)
+	{
+		Calendar cd = new GregorianCalendar();
+		cd.setTime(dt);
+		Add(cd);
+	}
+	public void Add(Calendar dt)
+	{
+		if (dt.get(Calendar.HOUR_OF_DAY) > 0)
+			_str += _dtmf.format(dt.getTime());
+		else
+			_str += _datf.format(dt.getTime());
+	}
+	
+	@Override
+	public int hashCode() 
+	{
+		//int ret = super.hashCode();
+		//int len = _oa.size();
+		//for (Object obj : _oa)
+		//	ret = ret * DELTA + obj.hashCode(); 
+		//return _oa.hashCode();
+		return _str.hashCode();
+	}
+	
+	@Override
+	public String toString() 
+	{
+		return _str;
+	}
+
+}

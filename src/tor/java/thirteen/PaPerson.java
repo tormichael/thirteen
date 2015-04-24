@@ -27,4 +27,14 @@ public class PaPerson extends Parser
 		_pame = null;
 	}
 	
+	public void run(String aText)
+	{
+		mStatusBegin();
+		
+		String[] ss = aText.split(" ", -1);
+		if (ss.length == 3)
+		{
+			
+		}
+	}
 }
