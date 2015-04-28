@@ -1,4 +1,4 @@
-package tor.java.thirteen;
+package tor.java.thirteen.parser;
 
 public class PaPerson extends Parser 
 {
