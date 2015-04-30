@@ -34,15 +34,15 @@ public class tPerson extends tObj
 	/**
 	 * last name
 	 */
-	private String LName;
+	private String _lame;
 	/**
 	 * first name
 	 */
-	private String FName;
+	private String _fame;
 	/**
 	 * patronymic name
 	 */
-	private String PName;
+	private String _pame;
 	/**
 	 * birthday in format YYYYMMDD
 	 */
@@ -75,22 +75,22 @@ public class tPerson extends tObj
     
     
     public String getLName() {
-		return LName;
+		return _lame;
 	}
 	public void setLName(String lName) {
-		LName = lName;
+		_lame = lName;
 	}
 	public String getFName() {
-		return FName;
+		return _fame;
 	}
 	public void setFName(String fName) {
-		FName = fName;
+		_fame = fName;
 	}
 	public String getPName() {
-		return PName;
+		return _pame;
 	}
 	public void setPName(String pName) {
-		PName = pName;
+		_pame = pName;
 	}
 	public String getBDay() {
 		return BDay;
@@ -132,9 +132,9 @@ public class tPerson extends tObj
 	public tPerson(String aLName, String aFName, String aPName, String aBDay, int aSex)
     {
 		Type = 1;
-    	LName = aLName;
-    	FName = aFName;
-    	PName = aPName;
+    	_lame = aLName;
+    	_fame = aFName;
+    	_pame = aPName;
     	BDay = aBDay;
     	Sex = aSex;
     	
@@ -240,5 +240,27 @@ public class tPerson extends tObj
 	{
 		
 	}
-    
+
+	public String getInitialName()
+	{
+		StringBuilder sb = new StringBuilder();
+		if (_fame != null && _fame.length() > 0)
+		{
+			sb.append(_fame.substring(0, 1));
+			if (_pame != null && _pame.length() > 0)
+				sb.append(_pame.substring(0, 1));
+		}
+		return sb.toString();
+	}
+	public String getInitialNameWithDot()
+	{
+		StringBuilder sb = new StringBuilder();
+		if (_fame != null && _fame.length() > 0)
+		{
+			sb.append(_fame.substring(0, 1)+".");
+			if (_pame != null && _pame.length() > 0)
+				sb.append(_pame.substring(0, 1)+".");
+		}
+		return sb.toString();
+	}
 }
