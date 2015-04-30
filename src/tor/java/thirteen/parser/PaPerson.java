@@ -1,26 +1,17 @@
 package tor.java.thirteen.parser;
 
+import tor.java.thirteen.card.tPerson;
+
 public class PaPerson extends Parser 
 {
 	public final static String FMT_FIO = "F I O";
 	public final static String FMT_IOF = "I O F";
 	public final static String FMT_IO_F = "I O, F";
 	
-	private String _lame; 
-	private String _fame; 
-	private String _pame; 
-	
-	public String getLastName()
+	private tPerson _prs ; 
+	public tPerson getPerson()
 	{
-		return _lame;
-	}
-	public String getFirstName()
-	{
-		return _fame;
-	}
-	public String getPatronymic()
-	{
-		return _pame;
+		return _prs;
 	}
 
 	public PaPerson ()
@@ -36,9 +27,7 @@ public class PaPerson extends Parser
 	@Override
 	public void initial()
 	{
-		_lame = null;
-		_fame = null;
-		_pame = null;
+		_prs = new tPerson();
 	}
 	
 	@Override
@@ -50,9 +39,9 @@ public class PaPerson extends Parser
 		{
 			if (mFormat.equals(FMT_FIO))
 			{
-				_lame = ss[0];
-				_fame = ss[1];
-				_pame = ss[2];
+				_prs.setLName(ss[0]);
+				_prs.setFName(ss[1]);
+				_prs.setPName(ss[2]);
 				ret = true;
 			}
 		}

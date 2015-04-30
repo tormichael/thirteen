@@ -1,18 +1,15 @@
 package tor.java.thirteen.parser;
 
-import JCommonTools.CC;
+import tor.java.thirteen.card.tAdr;
 
 public class PaAddress extends Parser 
 {
-	private String _index;
-	private String _country;
-	private String _region;
-	private String _place;
-	private String _build;
-	private String _flat;
+	private tAdr _adr;
 
-
-	
+	public tAdr getAddress()
+	{
+		return _adr;
+	}
 	
 	public PaAddress()
 	{
@@ -27,6 +24,7 @@ public class PaAddress extends Parser
 	public void initial() 
 	{
 		super.initial();
+		_adr = new tAdr();
 	}
 
 }
