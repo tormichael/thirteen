@@ -48,4 +48,26 @@ public class PaPerson extends Parser
 		
 		return ret;
 	}
+	
+	public void setSex(String aTxt)
+	{
+		String src= aTxt.toLowerCase().trim();
+		if (src.equals("м") 
+				||
+				src.equals("m")
+				||
+				src.equals("м.")
+				||
+				src.equals("m.")
+				||
+				src.indexOf("муж") >= 0
+				||
+				src.indexOf("male") >= 0
+				||
+				src.indexOf("man") >= 0
+		)
+			_prs.setSex(tPerson.SEX_MAN);
+		else
+			_prs.setSex(tPerson.SEX_WOMEN);
+	}
 }

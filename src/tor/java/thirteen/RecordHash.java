@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import tor.java.thirteen.card.tDoc;
 import JCommonTools.CC;
 
 /**
@@ -93,6 +94,11 @@ public class RecordHash
  	public final String RUS_REPLACE_SYM = "аеёоpсх";
  	public final String ENG_REPLACE_SYM = "aeeopcx";
  	
+	public void Add(String str)
+	{
+		_str += Sift(str);
+	}
+ 	
 	/**
 	 * 1	из текста удаляются символы:
 	 *		пробел, табуляция, возврат каретки, перевод каретки,
@@ -104,19 +110,27 @@ public class RecordHash
 	 *		a e e o p c x
 	 * @param str
 	 */
-	public void Add(String str)
+	public static String Sift(String str)
 	{
+		if (str == null || str.length() == 0)
+			return str;
+		
 		Pattern ptn = Pattern.compile("[\\s\\\\,.!?_\\|\\-№{}\\[\\]\\(\\)\"\'\\/*:;]");
 		Matcher mat = ptn.matcher(str);
 		String res = mat.replaceAll("").toLowerCase();
 		
-		String [] srcChar = {"а","е","ё","о","p","с","х"};
-		String [] tgtChar = {"a","e","e","o","p","c","x"};
+		String [] srcChar = {"а","е","ё","о","p","с","х","м","к"};
+		String [] tgtChar = {"a","e","e","o","p","c","x","m","k"};
 		
 		for (int ii = 0;  ii < srcChar.length; ii++)
 			res = res.replaceAll(srcChar[ii], tgtChar[ii]);
-		
-		_str += res;
+
+		return res;
+	}
+	
+	public static Boolean FuzzyEquality(String st1, String st2)
+	{
+		return (st1 == null && st2 == null) || Sift(st1).equals(Sift(st2));
 	}
 	
 	/**

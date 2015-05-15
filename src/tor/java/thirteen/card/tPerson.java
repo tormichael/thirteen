@@ -30,6 +30,9 @@ public class tPerson extends tObj
 	public final static int SEX_UNKNOWN = 0;
 	public final static int SEX_WOMEN = 1;
 	public final static int SEX_MAN = 2;
+
+	public final static String SEX_WOMEN_SYMBOL = "ж";
+	public final static String SEX_MAN_SYMBOL = "м";
 	
 	/**
 	 * last name
@@ -46,11 +49,11 @@ public class tPerson extends tObj
 	/**
 	 * birthday in format YYYYMMDD
 	 */
-	private String BDay;
+	private String _bday;
 	/**
 	 * sex 0-unknown; 1-women; 2-man; 
 	 */
-	private int Sex;
+	private int _sex;
 	/**
 	 * Personal images 
 	 */
@@ -78,31 +81,31 @@ public class tPerson extends tObj
 		return _lame;
 	}
 	public void setLName(String lName) {
-		_lame = lName;
+		_lame = lName.trim();
 	}
 	public String getFName() {
 		return _fame;
 	}
 	public void setFName(String fName) {
-		_fame = fName;
+		_fame = fName.trim();
 	}
 	public String getPName() {
 		return _pame;
 	}
 	public void setPName(String pName) {
-		_pame = pName;
+		_pame = pName.trim();
 	}
 	public String getBDay() {
-		return BDay;
+		return _bday;
 	}
 	public void setBDay(String bDay) {
-		BDay = bDay;
+		_bday = bDay.trim();
 	}
 	public int getSex() {
-		return Sex;
+		return _sex;
 	}
 	public void setSex(int sex) {
-		Sex = sex;
+		_sex = sex;
 	}
     @XmlElementWrapper (name = "ContactColl")
     @XmlElement (name = "tVTN")
@@ -135,8 +138,8 @@ public class tPerson extends tObj
     	_lame = aLName;
     	_fame = aFName;
     	_pame = aPName;
-    	BDay = aBDay;
-    	Sex = aSex;
+    	_bday = aBDay;
+    	_sex = aSex;
     	
     	//ImgColl =new ArrayList<tBin>();
     	ContactColl = new ArrayList<tVTN>();
@@ -206,11 +209,11 @@ public class tPerson extends tObj
 		GregorianCalendar gc = null;
 		try
 		{
-			if (BDay.length() == 8)
+			if (_bday.length() == 8)
 				gc = new GregorianCalendar(
-						Integer.parseInt(BDay.substring(0, 4)),
-						Integer.parseInt(BDay.substring(4, 6))-1, 
-						Integer.parseInt(BDay.substring(6, 8))
+						Integer.parseInt(_bday.substring(0, 4)),
+						Integer.parseInt(_bday.substring(4, 6))-1, 
+						Integer.parseInt(_bday.substring(6, 8))
 				);
 		}
 		catch (Exception ex)
@@ -232,13 +235,33 @@ public class tPerson extends tObj
 		if (bdd != null)
 		{
 			SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
-			BDay = df.format(bdd);
+			_bday = df.format(bdd);
 		}
 	}
 
 	public void addTelephone()
 	{
 		
+	}
+
+	public String getFullName()
+	{
+		StringBuilder sb = new StringBuilder();
+
+		if (_lame != null && _lame.length() > 0)
+			sb.append(_lame);
+
+		if (_fame != null && _fame.length() > 0)
+		{
+			sb.append(" ");
+			sb.append(_lame);
+			if (_pame != null && _pame.length() > 0)
+			{
+				sb.append(" ");
+				sb.append(_pame);
+			}
+		}
+		return sb.toString();
 	}
 
 	public String getInitialName()
@@ -262,5 +285,10 @@ public class tPerson extends tObj
 				sb.append(_pame.substring(0, 1)+".");
 		}
 		return sb.toString();
+	}
+	
+	public String getSexSymbol()
+	{
+		return _sex == SEX_WOMEN ? SEX_WOMEN_SYMBOL : (_sex == SEX_MAN ? SEX_MAN_SYMBOL : CC.STR_EMPTY);
 	}
 }

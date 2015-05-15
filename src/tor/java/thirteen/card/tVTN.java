@@ -2,6 +2,17 @@ package tor.java.thirteen.card;
 
 import JCommonTools.CC;
 
+/**
+ * Class - Value+Type+Note for present various simple value, so as:
+ *   - phone number
+ *   - email
+ *   - web site
+ *   - "nik" in various social networking 
+ *   and etc.
+ *   
+ * @author M.Tor
+ * @since 21.03.2013
+ */
 public class tVTN 
 {
 	private String _val;
@@ -10,9 +21,17 @@ public class tVTN
 	private String _note;
 	private int _nn;
 
+	/**
+	 * Get value
+	 * @return Value string.
+	 */
 	public String getValue() {
 		return _val;
 	}
+	/**
+	 * Set value.
+	 * @param value
+	 */
 	public void setValue(String value) {
 		_val = value;
 	}
