@@ -2,8 +2,26 @@ package tor.java.thirteen.parser;
 
 import JCommonTools.CC;
 
+/***
+ * Base class for parser various sequences various values. 
+ * Like personal names, documents, address and so on.
+ * 
+ * @author M.Tor
+ * @created 14.04.2015
+ */
 public class Parser 
 {
+	public final static String SEPARATOR_SPASE = " ";
+	public final static String SEPARATOR_COMMA = ",";
+	public final static String SEPARATOR_POINT = ".";
+	public final static String SEPARATOR_SEMICOLON = ";";
+	public final static String SEPARATOR_VERTICAL = "|";
+	public final static String SEPARATOR_TABULATION = "\t";
+	
+	protected String 	mValSrc;
+	protected String[] 	mVal;
+	protected Parser[] 	mValPa;
+	
 	/***
 	 * Status:
 	 * 0 - initial not work, begin parser;
@@ -14,7 +32,7 @@ public class Parser
 	protected String mFormat;
 	protected String[] mFmtAr;
 
-	protected String mDelim;
+	protected String mSepa;
 
 	protected void mStatusBegin()
 	{
@@ -52,18 +70,37 @@ public class Parser
 	{
 		mFormat = aFmt;
 		if (aFmt != null && aFmt.length() > 0)
-			mFmtAr = aFmt.split(mDelim, -1);
+			mFmtAr = aFmt.split(mSepa, -1);
 		else
 			mFmtAr = null;
 	}
 	
-	public String getDelimeter()
+	public String getSeparator()
 	{
-		return mDelim;
+		return mSepa;
 	}
-	public void setDelimeter(String aDelim)
+	public void setSeparator(String aSepa)
 	{
-		mDelim = aDelim;
+		mSepa = aSepa;
+	}
+	
+	public String getSource()
+	{
+		return mValSrc;
+	}
+	public void setSource(String aValSrv)
+	{
+		mValSrc = aValSrv;
+	}
+	
+	public String[] getValue()
+	{
+		return mVal;
+	}
+	
+	public Parser[] getValueParser()
+	{
+		return mValPa;
 	}
 	
 	public Parser()
@@ -72,7 +109,7 @@ public class Parser
 	}
 	public Parser(String aFmt)
 	{
-		mDelim = " ";
+		mSepa = SEPARATOR_SPASE; // default separator !!!
 		setFormat(aFmt);
 		initial();
 	}
@@ -80,24 +117,42 @@ public class Parser
 	public void initial()
 	{
 		mStatus = 0;
+		mValSrc = null;
+		mVal = null;
+		mValPa = null;
 	}
 	
 	protected void FormatParser(String aPattern)
 	{
 		mFormat = CC.STR_EMPTY;
 	}
-	
-	public void run(String aText)
+
+	public void Run(String aText)
+	{
+		initial();
+		mValSrc = aText;
+		Run();
+	}
+	public void Run()
 	{
 		mStatusBegin();
 		
-		if (!_run (aText))
-			initial();
+		if (mValSrc != null &&  mValSrc.length() > 0 && mSepa != null)
+		{
+			if (!_run ())
+				initial();
+		}
 	}
-	
-	protected boolean _run(String aText)
+	protected boolean _run()
 	{
-		return false;
+		mVal = mValSrc.split(mSepa, -1);
+		if (mVal.length > 0)
+		{
+			mValPa = new Parser[mVal.length];
+			for (int ii =0; ii < mValPa.length; ii++)
+				mValPa[ii] = new Parser(mVal[ii]);
+		}
+		return mVal != null;
 	}
 	
 	public String TrimFirstChar(String aSrc)

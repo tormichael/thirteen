@@ -4,9 +4,10 @@ import tor.java.thirteen.card.tPerson;
 
 public class PaPerson extends Parser 
 {
-	public final static String FMT_FIO = "F I O";
-	public final static String FMT_IOF = "I O F";
-	public final static String FMT_IO_F = "I O, F";
+	public final static String FMT_F_I_O = "F I O";
+	public final static String FMT_I_O_F = "I O F";
+	public final static String FMT_I_OC_F = "I O, F";
+	public final static String FMT_F_IO = "F i.o.";
 	
 	private tPerson _prs ; 
 	public tPerson getPerson()
@@ -31,17 +32,16 @@ public class PaPerson extends Parser
 	}
 	
 	@Override
-	protected boolean _run(String aText)
+	protected boolean _run()
 	{
-		boolean ret = false;
-		String[] ss = aText.split(mDelim, -1);
-		if (ss.length == 3)
+		boolean ret = super._run();
+		if (mVal.length == 3)
 		{
-			if (mFormat.equals(FMT_FIO))
+			if (mFormat.equals(FMT_F_I_O))
 			{
-				_prs.setLName(ss[0]);
-				_prs.setFName(ss[1]);
-				_prs.setPName(ss[2]);
+				_prs.setLName(mVal[0]);
+				_prs.setFName(mVal[1]);
+				_prs.setPName(mVal[2]);
 				ret = true;
 			}
 		}

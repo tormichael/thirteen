@@ -13,9 +13,21 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 public class tObj 
 {
 	protected String 			Name;
+	/***
+	 * Unique object identificator
+	 */
 	protected String 			UID;
-	protected Calendar		Create;
-	protected Calendar		LastModified;
+	/***
+	 * Date created object: for person - birthday: for organization date registration and so on
+	 */
+	protected Calendar			Create;
+	/***
+	 * Date last modification properties of this object
+	 */
+	protected Calendar			LastModified;
+	/***
+	 * Type object: person, organization, car, building or other
+	 */
 	protected Integer			Type;
 	/**
 	 * note about object or other common object's information 
