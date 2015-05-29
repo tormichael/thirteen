@@ -1,5 +1,7 @@
 package tor.java.thirteen.parser;
 
+import java.util.regex.Pattern;
+
 import JCommonTools.CC;
 
 /***
@@ -11,12 +13,12 @@ import JCommonTools.CC;
  */
 public class Parser 
 {
-	public final static String SEPARATOR_SPASE = " ";
-	public final static String SEPARATOR_COMMA = ",";
-	public final static String SEPARATOR_POINT = ".";
-	public final static String SEPARATOR_SEMICOLON = ";";
-	public final static String SEPARATOR_VERTICAL = "|";
-	public final static String SEPARATOR_TABULATION = "\t";
+	public final static String SEPARATOR_SPASE = "[\\ ]";
+	public final static String SEPARATOR_COMMA = "[\\,]";
+	public final static String SEPARATOR_POINT = "[\\.]";
+	public final static String SEPARATOR_SEMICOLON = "[;]";
+	public final static String SEPARATOR_VERTICAL = "[\\|]";
+	public final static String SEPARATOR_TABULATION = "[\\\t]";
 	
 	protected String 	mValSrc;
 	protected String[] 	mVal;
@@ -145,12 +147,16 @@ public class Parser
 	}
 	protected boolean _run()
 	{
-		mVal = mValSrc.split(mSepa, -1);
+		//mVal = mValSrc.split(mSepa, -1);
+		mVal = Pattern.compile(mSepa).split(mValSrc, -1);
 		if (mVal.length > 0)
 		{
 			mValPa = new Parser[mVal.length];
 			for (int ii =0; ii < mValPa.length; ii++)
-				mValPa[ii] = new Parser(mVal[ii]);
+			{
+				mValPa[ii] = new Parser();
+				mValPa[ii].setSource(mVal[ii]);
+			}
 		}
 		return mVal != null;
 	}
