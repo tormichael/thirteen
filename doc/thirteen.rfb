@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RefBook>
+    <refBookNode>
+        <Nodes>
+            <Node>
+                <Nodes>
+                    <Node>
+                        <Nodes>
+                            <Node>
+<Nodes/>
+<alias>l</alias>
+<id>1110</id>
+<name>Фамилия</name>
+                            </Node>
+                            <Node>
+<Nodes/>
+<alias>f</alias>
+<id>1120</id>
+<name>Имя</name>
+                            </Node>
+                            <Node>
+<Nodes/>
+<alias>p</alias>
+<id>1130</id>
+<name>Отчество</name>
+                            </Node>
+                        </Nodes>
+                        <alias>lfp</alias>
+                        <id>1100</id>
+                        <name>ФИО</name>
+                    </Node>
+                </Nodes>
+                <alias>hdr</alias>
+                <id>1000</id>
+                <name>Header</name>
+            </Node>
+        </Nodes>
+        <alias>rb</alias>
+        <id>1</id>
+        <name>RefBook</name>
+    </refBookNode>
+</RefBook>
