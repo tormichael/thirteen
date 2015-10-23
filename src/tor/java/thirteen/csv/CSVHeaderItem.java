@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 
+import tor.java.thirteen.parser.Parser;
+
 /**
  * 
  * @author tor
@@ -12,56 +14,29 @@ import javax.xml.bind.annotation.XmlElementWrapper;
  * created 01.10.2015
  * last modified 02.10.2015
  */
-public class CSVHeaderItem 
+public class CSVHeaderItem extends Parser
 {
-	private String _iStr; 
-	private String _type;
+	private int _type;
 	
-	private String _delim;
-	private ArrayList<CSVHeaderItem> _hItems;
-
-	public String getStrHI()
-	{
-		return _iStr;
-	}
-	public void setStrHI(String aStrHI)
-	{
-		_iStr = aStrHI;
-	}
-	
-	public String getTypeHI()
+	public int getTypeHI()
 	{
 		return _type;
 	}
-	public void setTypeHI(String aTypeHI)
+	public void setTypeHI(int aTypeHI)
 	{
 		_type = aTypeHI;
 	}
 
-	public String getDelim()
-	{
-		return _delim;
-	}
-	public void setDelim(String aDelim)
-	{
-		_delim = aDelim;
-	}
-	
-    @XmlElementWrapper (name = "ArrHI")
-    @XmlElement (name = "HI")
-	public ArrayList<CSVHeaderItem> getHItems()
-	{
-		if (_hItems == null)
-			_hItems = new ArrayList<CSVHeaderItem>();
-		
-		return _hItems;
-	}
 	
 	public CSVHeaderItem()
 	{
-		_iStr = null;
-		_type = null;
-		_delim = null;
-		_hItems = null;
+		_type = 0;
 	}
+
+	@Override
+	protected Parser newParserItem()
+	{
+		return new CSVHeaderItem();
+	}
+
 }

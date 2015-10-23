@@ -53,18 +53,18 @@ public class PaPeDoc extends Parser
 		
 		if (mFmtAr != null && mFmtAr.length > 0)
 		{
-			int mm = mFmtAr.length < mVal.length ? mFmtAr.length : mVal.length;
+			int mm = mFmtAr.length < mPI.length ? mFmtAr.length : mPI.length;
 			String series = CC.STR_EMPTY;
 			String number = CC.STR_EMPTY;
 			String place = CC.STR_EMPTY;
 			for(int ii = 0; ii < mm; ii++)
 			{
 				if(mFmtAr[ii].equals("S"))
-					series +=  mSepa+ mVal[ii];
+					series +=  mDelim+ getValue(ii);
 				else if(mFmtAr[ii].equals("N"))
-					number += mSepa+ mVal[ii];
+					number += mDelim+ getValue(ii);
 				else if(mFmtAr[ii].equals("P"))
-					place += mSepa+ mVal[ii];
+					place += mDelim+ getValue(ii);
 				//else if(mFmtAr[ii].equals("D"))
 				//	_date = mVal[ii];
 			}

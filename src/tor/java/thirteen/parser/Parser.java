@@ -2,6 +2,7 @@ package tor.java.thirteen.parser;
 
 import java.util.regex.Pattern;
 
+import tor.java.thirteen.csv.CSVHeaderItem;
 import JCommonTools.CC;
 
 /***
@@ -9,7 +10,8 @@ import JCommonTools.CC;
  * Like personal names, documents, address and so on.
  * 
  * @author M.Tor
- * @created 14.04.2015
+ * date created 14.04.2015
+ * last modified 15.10.2015
  */
 public class Parser 
 {
@@ -21,20 +23,18 @@ public class Parser
 	public final static String SEPARATOR_TABULATION = "[\\\t]";
 	
 	protected String 	mValSrc;
-	protected String[] 	mVal;
-	protected Parser[] 	mValPa;
-	
+	protected String 	mDelim;
+	protected Parser[] 	mPI;
 	/***
 	 * Status:
 	 * 0 - initial not work, begin parser;
 	 * 1 - did parser with good result - all right!
 	 */
 	protected int mStatus;
+	//protected String mStatusText;
 	
 	protected String mFormat;
 	protected String[] mFmtAr;
-
-	protected String mSepa;
 
 	protected void mStatusBegin()
 	{
@@ -51,6 +51,16 @@ public class Parser
 	protected void mStatusFinishError(int aErrorCode)
 	{
 		mStatus = 1000+aErrorCode;
+	}
+
+	public String getDelimiter()
+	{
+		return mDelim;
+	}
+	public void setDelimiter(String aDelim)
+	{
+		mDelim = aDelim;
+		//mSepa = "\\" + aSepa; 
 	}
 	
 	public int getStatus()
@@ -72,18 +82,9 @@ public class Parser
 	{
 		mFormat = aFmt;
 		if (aFmt != null && aFmt.length() > 0)
-			mFmtAr = aFmt.split(mSepa, -1);
+			mFmtAr = aFmt.split(mDelim, -1);
 		else
 			mFmtAr = null;
-	}
-	
-	public String getSeparator()
-	{
-		return mSepa;
-	}
-	public void setSeparator(String aSepa)
-	{
-		mSepa = aSepa;
 	}
 	
 	public String getSource()
@@ -95,23 +96,35 @@ public class Parser
 		mValSrc = aValSrv;
 	}
 	
-	public String[] getValue()
+	public String getValue(int index)
 	{
-		return mVal;
+		if (mPI != null)
+			return mPI[index].getSource();
+		else
+			return null;
 	}
 	
-	public Parser[] getValueParser()
+	//@XmlElementWrapper (name = "ArrPI")
+	//@XmlElement (name = "PI")
+	public Parser[] getParserItems()
 	{
-		return mValPa;
+		return mPI;
+	}
+	public void setParserItems(Parser [] aPI)
+	{
+		mPI = aPI;
 	}
 	
+	/**
+	 * Default constructor.
+	 */
 	public Parser()
 	{
 		this(null);
 	}
 	public Parser(String aFmt)
 	{
-		mSepa = SEPARATOR_SPASE; // default separator !!!
+		mDelim = SEPARATOR_SPASE; // default separator !!!
 		setFormat(aFmt);
 		initial();
 	}
@@ -119,9 +132,9 @@ public class Parser
 	public void initial()
 	{
 		mStatus = 0;
+		//mStatusText = null;
 		mValSrc = null;
-		mVal = null;
-		mValPa = null;
+		mPI = null;
 	}
 	
 	protected void FormatParser(String aPattern)
@@ -139,7 +152,7 @@ public class Parser
 	{
 		mStatusBegin();
 		
-		if (mValSrc != null &&  mValSrc.length() > 0 && mSepa != null)
+		if (mValSrc != null &&  mValSrc.length() > 0 && mDelim != null)
 		{
 			if (!_run ())
 				initial();
@@ -147,18 +160,28 @@ public class Parser
 	}
 	protected boolean _run()
 	{
+		boolean ret = false;
 		//mVal = mValSrc.split(mSepa, -1);
-		mVal = Pattern.compile(mSepa).split(mValSrc, -1);
-		if (mVal.length > 0)
+		String [] ss  = Pattern.compile(mDelim).split(mValSrc, -1);
+		if (ss.length > 0)
 		{
-			mValPa = new Parser[mVal.length];
-			for (int ii =0; ii < mValPa.length; ii++)
+			mPI = new Parser[ss.length];
+			for (int ii =0; ii < mPI.length; ii++)
 			{
-				mValPa[ii] = new Parser();
-				mValPa[ii].setSource(mVal[ii]);
+				mPI[ii] = newParserItem();
+				mPI[ii].setSource(ss[ii]);
 			}
+			ret = true;
 		}
-		return mVal != null;
+		return ret;
+	}
+	/**
+	 * May be override in inheritable class
+	 * @return Parser
+	 */
+	protected Parser newParserItem()
+	{
+		return new Parser();
 	}
 	
 	public String TrimFirstChar(String aSrc)
@@ -171,5 +194,32 @@ public class Parser
 		{
 			return CC.STR_EMPTY;
 		}
+	}
+	
+	/**
+	 * Count parser items.
+	 * @param aPI - array items
+	 * @param aIsAll - if true, calculate  all item, else only leaf (not node)
+	 * @return
+	 */
+	public static int GetItemsCount(Parser [] aPI, boolean aIsAll)
+	{
+		int ret = 0;
+		
+		for (int ii=0; ii < aPI.length; ii++)
+		{
+			if (aPI[ii].getParserItems() != null && aPI[ii].getParserItems().length > 0)
+			{
+				ret += GetItemsCount(aPI[ii].getParserItems(), aIsAll);
+				if (aIsAll)
+					ret ++;
+			}
+			else
+			{
+				ret ++;
+			}
+		}
+		
+		return ret;
 	}
 }

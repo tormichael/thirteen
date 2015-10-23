@@ -35,13 +35,13 @@ public class PaPerson extends Parser
 	protected boolean _run()
 	{
 		boolean ret = super._run();
-		if (mVal.length == 3)
+		if (mPI.length == 3)
 		{
 			if (mFormat.equals(FMT_F_I_O))
 			{
-				_prs.setLName(mVal[0]);
-				_prs.setFName(mVal[1]);
-				_prs.setPName(mVal[2]);
+				_prs.setLName(getValue(0));
+				_prs.setFName(getValue(1));
+				_prs.setPName(getValue(2));
 				ret = true;
 			}
 		}
