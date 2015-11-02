@@ -9,6 +9,7 @@ import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 
@@ -28,6 +29,7 @@ public class JPanelCSVColumns extends JPanel
 	private JButton 		_btnRefresh;
 	private ttmCSVColumns	_ttm;
 	private JTreeTable			_treeTab;
+	private  JScrollPane 		_spTT;
 
 	public void setHeader(CSVHeaderItem aHeader)
 	{
@@ -36,17 +38,8 @@ public class JPanelCSVColumns extends JPanel
 		{
 			_txtVal.setText(_header.getSource());
 			_txtDelim.setText(_header.getDelimiter());
-			if (_treeTab != null)
-			{
-				_gbl.removeLayoutComponent(_treeTab);
-				this.remove(_treeTab);
-				_ttm = null;
-				_treeTab = null;
-			}
-			_ttm = new ttmCSVColumns(_header, _rbHIType);
-			_treeTab = new JTreeTable(_ttm);
-			_gbl.setConstraints(_treeTab, new GBC(0,3).setGridSpan(4, 1).setInsets(2,2,2,2).setFill(GBC.BOTH).setWeight(1.0, 1.0));
-			this.add(_treeTab);
+			_ttm.setHeader(aHeader);
+			_treeTab.updateUI();
 		}
 	}
 	
@@ -74,6 +67,25 @@ public class JPanelCSVColumns extends JPanel
 		_gbl.setConstraints(_btnRefresh, new GBC(2,2).setInsets(2,20,2,2));
 		this.add(_btnRefresh);
 
+		_ttm = new ttmCSVColumns(_header, _rbHIType);
+		_treeTab = new JTreeTable(_ttm);
+		_treeTab.getTree().setRootVisible(true);
+		_treeTab.getTree().setEditable(true);
+		_spTT =  new JScrollPane(_treeTab);
+		_gbl.setConstraints(_spTT, new GBC(0,3).setGridSpan(4, 1).setInsets(2,2,2,2).setFill(GBC.BOTH).setWeight(1.0, 1.0));
+		this.add(_spTT);
+	}
+	
+	private void _addNewTableTree()
+	{
+		if (_treeTab != null)
+		{
+			_gbl.removeLayoutComponent(_spTT);
+			this.remove(_spTT);
+			_spTT = null;
+			_treeTab = null;
+			_ttm = null;
+		}
 	}
 	
 	Action actRefresh = new AbstractAction() 
@@ -82,7 +94,13 @@ public class JPanelCSVColumns extends JPanel
 		public void actionPerformed(ActionEvent e) 
 		{
 			if (_header != null)
+			{
+				_header.setDelimiter(_txtDelim.getText());
 				_header.Run();
+				_ttm.setHeader(_header);
+				_treeTab.updateUI();
+			}
 		}
 	};
 }
+ 

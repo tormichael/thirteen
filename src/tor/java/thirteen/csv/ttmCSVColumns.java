@@ -14,17 +14,23 @@ import JCommonTools.RefBook.rbNode;
 public class ttmCSVColumns extends AbstractTreeTableModel 
 {
 	private ResourceBundle _bnd;
-	private CSVHeaderItem _hdr;
+	//private CSVHeaderItem _hdr;
 	
 	//private DefaultTreeModel _trm;
 	private rbNode _rbn;
 	//private DefaultComboBoxModel<String> _modCboDelim;
 	
+	public void setHeader(CSVHeaderItem aHeader)
+	{
+		//_hdr = aHeader;
+		root = aHeader;
+	}
+	
 	public ttmCSVColumns(CSVHeaderItem aHeader, rbNode aRefNode) 
 	{
-		super ("root");
+		super (aHeader);
 
-		_hdr = aHeader;
+		//_hdr = aHeader;
 		_rbn = aRefNode;
 		_bnd = ResourceBundle.getBundle(Thirteen.CT_RESOURCE_TEXT);
 	}
@@ -60,10 +66,10 @@ public class ttmCSVColumns extends AbstractTreeTableModel
 	@Override
 	public boolean isLeaf(Object node) 
 	{
-		if (node instanceof CSVHeaderItem)
-			return ((CSVHeaderItem)node).getParserItems().length > 0;
+		if (node instanceof CSVHeaderItem && ((CSVHeaderItem)node).getParserItems() != null)
+			return ((CSVHeaderItem)node).getParserItems().length == 0;
 		else
-			return false;
+			return true;
 	}
 	
 	@Override
