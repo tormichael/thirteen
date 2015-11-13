@@ -9,6 +9,7 @@ import javax.swing.tree.DefaultTreeModel;
 import tor.java.thirteen.Thirteen;
 import JCommonTools.CC;
 import JCommonTools.JTreeTable.AbstractTreeTableModel;
+import JCommonTools.JTreeTable.TreeTableModel;
 import JCommonTools.RefBook.rbNode;
 
 public class ttmCSVColumns extends AbstractTreeTableModel 
@@ -64,12 +65,31 @@ public class ttmCSVColumns extends AbstractTreeTableModel
 	}
 
 	@Override
+	public Class getColumnClass(int column) 
+	{
+		if (column == 0)
+		{
+			return TreeTableModel.class;
+		}
+		else
+		{
+			return String.class;
+		}
+	}
+	
+	@Override
 	public boolean isLeaf(Object node) 
 	{
-		if (node instanceof CSVHeaderItem && ((CSVHeaderItem)node).getParserItems() != null)
-			return ((CSVHeaderItem)node).getParserItems().length == 0;
+		if (node instanceof CSVHeaderItem)
+		{
+			CSVHeaderItem hi = (CSVHeaderItem) node;
+			if (hi.getParserItems() != null)
+				return hi.getParserItems().length == 0;
+			else
+				return true;
+		}
 		else
-			return true;
+			return false;
 	}
 	
 	@Override
@@ -82,7 +102,7 @@ public class ttmCSVColumns extends AbstractTreeTableModel
 			switch (column) {
 			case 0:
 				ret = hi.getSource();
-				break;
+			break;
 			case 1:
 			{
 				if (hi.getTypeHI() > 0)
@@ -91,15 +111,14 @@ public class ttmCSVColumns extends AbstractTreeTableModel
 					if (nd != null)
 						ret =  nd.getName();
 				}
-				break;
+			break;
 			}
 			case 2:
 				ret = hi.getDelimiter();
-				break;
+			break;
 //			default:
 //				break;
 			}
-			
 		}
 
 		return ret;
@@ -108,7 +127,7 @@ public class ttmCSVColumns extends AbstractTreeTableModel
 	@Override
 	public Object getChild(Object parent, int index) 
 	{
-		if (parent instanceof CSVHeaderItem)
+		if (parent instanceof CSVHeaderItem && ((CSVHeaderItem)parent).getParserItems() != null)
 		{
 			return ((CSVHeaderItem)parent).getParserItems()[index];
 		}
@@ -121,7 +140,7 @@ public class ttmCSVColumns extends AbstractTreeTableModel
 	@Override
 	public int getChildCount(Object parent) 
 	{
-		if (parent instanceof CSVHeaderItem)
+		if (parent instanceof CSVHeaderItem && ((CSVHeaderItem)parent).getParserItems() != null)
 		{
 			return ((CSVHeaderItem)parent).getParserItems().length;
 		}
@@ -153,11 +172,13 @@ public class ttmCSVColumns extends AbstractTreeTableModel
 		    	   CSVHeaderItem hi = (CSVHeaderItem) node;
 		    	   hi.setTypeHI(nd.getId());
 	    	   }
+	    	   break;
 	       }
 	       case 2:
 	       {
 	    	   CSVHeaderItem hi = (CSVHeaderItem) node;
 	    	   hi.setDelimiter(aValue.toString());
+	    	   break;
 	       }
 	       default: 
 				super.setValueAt(aValue, node, column);

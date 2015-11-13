@@ -34,9 +34,24 @@ public class CSVHeaderItem extends Parser
 	}
 
 	@Override
+    public String toString() 
+    { 
+       return mValSrc; 
+    } 
+	
+	@Override
 	protected Parser newParserItem()
 	{
 		return new CSVHeaderItem();
 	}
 
+//	public void setEmptyItems()
+//	{
+//		mValSrc = "#";
+//		mPI = new Parser[3];
+//		mPI[0] = newParserItem();
+//		mPI[1] = newParserItem();
+//		mPI[2] = newParserItem();
+//	}
+	
 }
