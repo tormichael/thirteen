@@ -1,4 +1,4 @@
-package tor.java.thirteen.parser;
+package tor.java.thirteen.dic;
 
 /**
  * 
@@ -12,19 +12,19 @@ public class wdItem
 		UNDEFINED('u'),			//undefined
 		
 		dSPACE('s'),					//space
-		dVERTICAL('v'),			//vertical line
+		dVERTICAL('v'),				//vertical line
 		dPOINT('p'),					//point
 		dCOMMA('c'),				//comma
-		dSEMICOLON('s'),		//semicolon
-		dTABULATION('t'),		//tabulation sing
-		dBRACKET('b'),			//скобки ()[]{}<>
+		dSEMICOLON('s'),			//semicolon
+		dTABULATION('t'),			//tabulation sing
+		dBRACKET('b'),				//скобки ()[]{}<>
 		dOTHERS('o'),				//другие символы пунктуации: !?:
 		
 		wLATINIAN('a'),			//латинские буквы
-		wCYRILLIC('c'),			//буквы кириллицы
-		wDECIMAL('d'),			//десятичные цифры (0,1,2,3,4,5,6,7,8,9)
-		wHEXADECIMAL('h'),	//	шестнадцатеричные цифры (0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f)
-		wROMAN('r')				//римские цифры (I,V,X,L,C,D,M)
+		wCYRILLIC('c'),				//буквы кириллицы
+		wDECIMAL('d'),				//десятичные цифры (0,1,2,3,4,5,6,7,8,9)
+		wHEXADECIMAL('h'),		//	шестнадцатеричные цифры (0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f)
+		wROMAN('r')					//римские цифры (I,V,X,L,C,D,M)
 		;
 		
 		private char _abbr;

@@ -13,14 +13,18 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 
 import tor.java.thirteen.Thirteen;
+import tor.java.thirteen.dic.wdpPerson;
 import tor.java.thirteen.parser.Parser;
 import JCommonTools.CC;
 import JCommonTools.CodeText;
@@ -30,6 +34,7 @@ import JCommonTools.RefBook.rbNode;
 
 public class JPanelCSVColumns extends JPanel 
 {
+	private String _prefPath;
 	private CSVHeaderItem _header;
 	private String _sepa;
 	
@@ -53,6 +58,15 @@ public class JPanelCSVColumns extends JPanel
 	private ttmCSVColumns	_ttm;
 	private JTreeTable			_treeTab;
 	private  JScrollPane 		_spTT;
+
+	public String getPreferencePath() 
+	{
+		return _prefPath;
+	}
+	public void setPreferencePath(String _prefPath) 
+	{
+		this._prefPath = _prefPath;
+	}
 
 	public void setHeader(CSVHeaderItem aHeader)
 	{
@@ -172,6 +186,12 @@ public class JPanelCSVColumns extends JPanel
 		_gbl.setConstraints(_spTT, new GBC(0,4).setGridSpan(4, 1).setInsets(2,2,2,2).setFill(GBC.BOTH).setWeight(1.0, 1.0));
 		this.add(_spTT);
 
+		JPopupMenu pppCSVTab = new JPopupMenu();
+		JMenuItem pmnCSVTEdit = new JMenuItem(actEditCSVItem);
+		pmnCSVTEdit.setText(_bnd.getString("PopupMenu.jpCSVC.tabCSVC.Edit"));
+		pppCSVTab.add(pmnCSVTEdit);
+		_treeTab.setComponentPopupMenu(pppCSVTab);
+		
 	
 		_rdbSpace.setActionCommand(Parser.SEPARATOR_SPASE);
 		_rdbTab.setActionCommand(Parser.SEPARATOR_TABULATION);
@@ -186,6 +206,7 @@ public class JPanelCSVColumns extends JPanel
 		_rdbComma.setText(_bnd.getString("Separator.Name.Comma"));
 		_rdbSemicolon.setText(_bnd.getString("Separator.Name.Semicolon"));
 		_rdbOther.setText(_bnd.getString("Separator.Name.Other"));
+		
 	}
 	
 	private void _addNewTableTree()
@@ -230,5 +251,29 @@ public class JPanelCSVColumns extends JPanel
 			
 		}
 	};
+
+	Action actEditCSVItem = new AbstractAction() 
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) 
+		{
+//			if (_treeTab.getSelectedRowCount() == 1)
+//			{
+//				JDialog dlg = new JDialog();
+//				JPanelCSVColumns pnlCSVC = new JPanelCSVColumns(_rbHIType, "aLabelSrc");
+//				dlg.add(pnlCSVC, BorderLayout.CENTER);
+//				JButton cmd = new JButton(JPanelCSVColumns.this.actRefresh);
+//				cmd.setText(_bnd.getString("Button.Ok"));
+//				dlg.add(cmd, BorderLayout.SOUTH);
+//				
+//				dlg.setVisible(true);
+//			}
+			JDlgSeparatorDefine dlg = new JDlgSeparatorDefine();
+			dlg.setPreferencesPath(_prefPath);
+			dlg.setVisible(true);
+		}
+	};
+	
+	
 }
  
