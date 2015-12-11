@@ -75,8 +75,8 @@ public class JPanelCSVColumns extends JPanel
 		{
 			_txtVal.setText(_header.getSource());
 			//_txtDelim.setText(_header.getDelimiter());
-			//_ttm.setHeader(aHeader);
-			//_treeTab.updateUI();
+			_ttm.setHeader(aHeader);
+			_treeTab.updateUI();
 		}
 	}
 
@@ -257,23 +257,36 @@ public class JPanelCSVColumns extends JPanel
 		@Override
 		public void actionPerformed(ActionEvent e) 
 		{
-//			if (_treeTab.getSelectedRowCount() == 1)
-//			{
-//				JDialog dlg = new JDialog();
-//				JPanelCSVColumns pnlCSVC = new JPanelCSVColumns(_rbHIType, "aLabelSrc");
-//				dlg.add(pnlCSVC, BorderLayout.CENTER);
-//				JButton cmd = new JButton(JPanelCSVColumns.this.actRefresh);
-//				cmd.setText(_bnd.getString("Button.Ok"));
-//				dlg.add(cmd, BorderLayout.SOUTH);
-//				
-//				dlg.setVisible(true);
-//			}
-			JDlgSeparatorDefine dlg = new JDlgSeparatorDefine();
-			dlg.setPreferencesPath(_prefPath);
-			dlg.setVisible(true);
+			if (_treeTab.getSelectedRowCount() == 1)
+			{
+				int ind = _treeTab.getSelectedRow();
+				CSVHeaderItem hi = (CSVHeaderItem)_ttm.getChild(_header, ind);
+				JDlgSeparatorDefine dlg = new JDlgSeparatorDefine();
+				dlg.setPreferencesPath(_prefPath);
+				dlg.setText(hi.getSource());
+				dlg.setVisible(true);
+				
+				if (dlg.isResultOk())
+				{
+					if (_header != null)
+					{
+						_header.setDelimiter(dlg.getSeparator());
+						_header.Run();
+						_ttm.setHeader(_header);
+						_treeTab.updateUI();
+					}
+				}
+			}
 		}
 	};
 	
+	Action actEditCSVItemOk = new AbstractAction() 
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) 
+		{
+		}
+	};
 	
 }
  

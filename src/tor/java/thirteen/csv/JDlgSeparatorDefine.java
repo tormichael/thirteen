@@ -58,6 +58,15 @@ public class JDlgSeparatorDefine extends JDialog
 		return _isResultOk;
 	}
 
+	public String getText()
+	{
+		return _txtVal.getText();
+	}
+	public void setText(String aText)
+	{
+		_txtVal.setText(aText);
+	}
+	
 	public String getSeparator()
 	{
 		if (_sepa == CC.STR_EMPTY)
