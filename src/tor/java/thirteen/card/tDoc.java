@@ -1,10 +1,14 @@
 package tor.java.thirteen.card;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
+
+import tor.java.thirteen.RecordHash;
 
 public class tDoc 
 {
@@ -98,12 +102,81 @@ public class tDoc
 	
 	public tDoc() 
 	{
-		_imgColl = new ArrayList<tBin>();
-		_series = null;
-		_number = null;
-		_who = null;
-		_when = null;
-		
+		this (0, null, null, null, null);
 	}
 
+	public tDoc (int aType, String aSer, String aNum)
+	{
+		this (aType, aSer, aNum, null, null);
+	}
+	public tDoc (int aType, String aSer, String aNum, String aWho, Date aWhen)
+	{
+		_imgColl = new ArrayList<tBin>();
+		_type = aType;
+		_nn = 0;
+		
+		_series = aSer;
+		_number = aNum;
+		_who = aWho;
+		_when = aWhen;
+	}
+	
+	public static boolean FuzzyEquality(tDoc doc1, tDoc doc2)
+	{
+		if (doc1.getType() != doc2.getType())
+			return false;
+		
+		if (!RecordHash.FuzzyEquality(doc1.getSeries(), doc2.getSeries()))
+			return false;
+
+		if (!RecordHash.FuzzyEquality(doc1.getNumber(), doc2.getNumber()))
+			return false;
+
+		//if (!RecordHash.FuzzyEquality(doc1.getWho(), doc2.getWho()))
+		//	return false;
+		
+		//if ((doc1.getWhen() == null && doc2. )
+		
+		return true;
+	}
+
+	@Override
+	public String toString() 
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append(_series);
+		sb.append(" ");
+		sb.append(_number);
+		
+		if (_when != null)
+		{
+			DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault());
+			sb.append(" [");
+			sb.append(df.format(_when));
+			sb.append("] ");
+		}
+		
+		if (_who != null && _who.length() > 0)
+		{
+			sb.append(" ");
+			sb.append(_who);
+		}
+		
+		return sb.length() > 0 ? sb.toString() : "undefined";  
+	}
+	
+	@Override
+	public Object clone() throws CloneNotSupportedException 
+	{
+		tDoc doc = new tDoc(_type, new String(_series), new String(_number), new String(_who), _when);
+		if (_note != null)
+			doc.setNote(new String(_note));
+		if (_finished != null)
+			doc.setFinished(_finished);
+		for(tBin img : _imgColl)
+		{
+			doc.getImgColl().add((tBin) img.clone());
+		}
+		return doc;
+	}
 }

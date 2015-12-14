@@ -101,4 +101,17 @@ public class tBin
 			
 		}
 	}
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException 
+	{
+		tBin bin = new tBin();
+		
+		bin.setBin(Bin.clone());
+		bin.setFmt(new String(Fmt));
+		bin.setType(new String(Type));
+		bin.setNote(new String(Note));
+		bin.setNN(NN);
+		return bin;
+	}
 }

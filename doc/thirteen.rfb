@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RefBook>
+    <refBookNode>
+        <Nodes>
+            <Node>
+                <Nodes>
+                    <Node>
+                        <Nodes/>
+                        <alias>name</alias>
+                        <id>1010</id>
+                        <name>Наименование/название</name>
+                    </Node>
+                    <Node>
+                        <Nodes>
+                            <Node>
+<Nodes/>
+<alias>dser</alias>
+<id>2012</id>
+<name>Серия</name>
+                            </Node>
+                            <Node>
+<Nodes/>
+<alias>dnum</alias>
+<id>2014</id>
+<name>Номер</name>
+                            </Node>
+                            <Node>
+<Nodes>
+    <Node>
+        <Nodes/>
+        <alias>prfd</alias>
+        <id>2116</id>
+        <name>Дата выдачи</name>
+    </Node>
+    <Node>
+        <Nodes/>
+        <alias>prfw</alias>
+        <id>2118</id>
+        <name>Кем выдан</name>
+    </Node>
+    <Node>
+        <Nodes/>
+        <alias>prfn</alias>
+        <id>2114</id>
+        <name>Номер паспорта</name>
+    </Node>
+    <Node>
+        <Nodes/>
+        <alias>prfs</alias>
+        <id>2112</id>
+        <name>Серия паспорта</name>
+    </Node>
+</Nodes>
+<alias>prf</alias>
+<id>2110</id>
+<name>Паспорт РФ</name>
+                            </Node>
+                        </Nodes>
+                        <alias>doc</alias>
+                        <id>2000</id>
+                        <name>Документ</name>
+                    </Node>
+                    <Node>
+                        <Nodes>
+                            <Node>
+<Nodes/>
+<alias>birthday</alias>
+<id>1410</id>
+<name>Дата рождения</name>
+                            </Node>
+                        </Nodes>
+                        <alias>date</alias>
+                        <id>1400</id>
+                        <name>Дата</name>
+                    </Node>
+                    <Node>
+                        <Nodes>
+                            <Node>
+<Nodes/>
+<alias>l</alias>
+<id>1110</id>
+<name>Фамилия</name>
+                            </Node>
+                            <Node>
+<Nodes/>
+<alias>f</alias>
+<id>1120</id>
+<name>Имя</name>
+                            </Node>
+                            <Node>
+<Nodes/>
+<alias>p</alias>
+<id>1130</id>
+<name>Отчество</name>
+                            </Node>
+                        </Nodes>
+                        <alias>lfp</alias>
+                        <id>1100</id>
+                        <name>ФИО</name>
+                    </Node>
+                    <Node>
+                        <Nodes>
+                            <Node>
+<Nodes/>
+<alias>aindex</alias>
+<id>1203</id>
+<name>Индекс</name>
+                            </Node>
+                            <Node>
+<Nodes/>
+<alias>rng</alias>
+<id>1210</id>
+<name>Регион</name>
+                            </Node>
+                            <Node>
+<Nodes/>
+<alias>ttwn</alias>
+<id>1220</id>
+<name>Тип населенного пункта</name>
+                            </Node>
+                            <Node>
+<Nodes/>
+<alias>twn</alias>
+<id>1230</id>
+<name>Населенный пункт</name>
+                            </Node>
+                            <Node>
+<Nodes>
+    <Node>
+        <Nodes/>
+        <alias>aptype</alias>
+        <id>1242</id>
+        <name>Тип места адреса</name>
+    </Node>
+    <Node>
+        <Nodes/>
+        <alias>apbnum</alias>
+        <id>1245</id>
+        <name>Номер дома</name>
+    </Node>
+    <Node>
+        <Nodes/>
+        <alias>apbsn</alias>
+        <id>1246</id>
+        <name>Номер дома - корпус</name>
+    </Node>
+    <Node>
+        <Nodes/>
+        <alias>apfnum</alias>
+        <id>1248</id>
+        <name>Номер квартиры</name>
+    </Node>
+    <Node>
+        <Nodes/>
+        <alias>apname</alias>
+        <id>1243</id>
+        <name>Название места</name>
+    </Node>
+</Nodes>
+<alias>plc</alias>
+<id>1240</id>
+<name>Место</name>
+                            </Node>
+                        </Nodes>
+                        <alias></alias>
+                        <id>1200</id>
+                        <name>Адрес</name>
+                    </Node>
+                    <Node>
+                        <Nodes>
+                            <Node>
+<Nodes/>
+<alias></alias>
+<id>1320</id>
+<name>eMail</name>
+                            </Node>
+                            <Node>
+<Nodes/>
+<alias>url</alias>
+<id>1330</id>
+<name>www</name>
+                            </Node>
+                            <Node>
+<Nodes/>
+<alias></alias>
+<id>1310</id>
+<name>Телефон</name>
+                            </Node>
+                        </Nodes>
+                        <alias></alias>
+                        <id>1300</id>
+                        <name>Контакт</name>
+                    </Node>
+                </Nodes>
+                <alias>hdr</alias>
+                <id>1000</id>
+                <name>Header</name>
+            </Node>
+        </Nodes>
+        <alias>rb</alias>
+        <id>1</id>
+        <name>RefBook</name>
+    </refBookNode>
+</RefBook>

@@ -12,12 +12,16 @@ public class PaPeDoc extends Parser
 	
 	
 	/**
-	 
-	series - S
-	number;		// N
-	private String _place;			// P
-	private Date _when;			// W
-	
+	 FORMAT symbols:
+		S - series
+		N - number
+		P - place
+		W - when
+		T - various other word
+		
+		For examples:
+		12 23 654321 выдан 12.12.2012 УФМС России по г. Москве по р-ну Восточный
+		S S N T W PE - додумкать !!!!!
 	 */
 
 	public tDoc getDoc()
@@ -43,30 +47,26 @@ public class PaPeDoc extends Parser
 	}
 	
 	@Override
-	protected boolean _run(String aText) 
+	protected boolean _run() 
 	{
-		boolean ret = false;
-		
-		String[] ss = aText.split(mDelim, -1);
-		
-		initial();
+		boolean ret = super._run();
 		
 		if (mFmtAr != null && mFmtAr.length > 0)
 		{
-			int mm = mFmtAr.length < ss.length ? mFmtAr.length : ss.length;
+			int mm = mFmtAr.length < mPI.length ? mFmtAr.length : mPI.length;
 			String series = CC.STR_EMPTY;
 			String number = CC.STR_EMPTY;
 			String place = CC.STR_EMPTY;
 			for(int ii = 0; ii < mm; ii++)
 			{
 				if(mFmtAr[ii].equals("S"))
-					series +=  mDelim+ ss[ii];
+					series +=  mDelim+ getValue(ii);
 				else if(mFmtAr[ii].equals("N"))
-					number += mDelim+ ss[ii];
+					number += mDelim+ getValue(ii);
 				else if(mFmtAr[ii].equals("P"))
-					place += mDelim+ ss[ii];
+					place += mDelim+ getValue(ii);
 				//else if(mFmtAr[ii].equals("D"))
-				//	_date = ss[ii];
+				//	_date = mVal[ii];
 			}
 			_doc.setSeries(TrimFirstChar(series)); 
 			_doc.setNumber(TrimFirstChar(number)); 
@@ -77,3 +77,4 @@ public class PaPeDoc extends Parser
 		return ret;
 	}
 }
+
