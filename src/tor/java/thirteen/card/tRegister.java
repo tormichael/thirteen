@@ -140,7 +140,12 @@ public class tRegister
 			@Override
 			public int compare(tObj o1, tObj o2) 
 			{
-				return o1.Name.compareToIgnoreCase(o2.Name);
+				if (o1 == null || o1.Name == null)
+					return -1;
+				else if (o2 == null || o2.Name == null)
+					return 1;
+				else
+					return o1.Name.compareToIgnoreCase(o2.Name);
 			}
 		};
 
