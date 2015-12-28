@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.security.GeneralSecurityException;
 
 import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 public class Thirteen 
 {
@@ -59,5 +61,19 @@ public class Thirteen
 		}
 		
 		out.write(outBytes);
+	}
+
+	public static SecretKey getSecretKey(String aPassword)
+	{
+		byte[] sk = new byte[16];
+		byte[] pwd = aPassword.getBytes();
+		for (byte ii = 0; ii < 16; ii++)
+		{
+			if (ii < pwd.length)
+				sk[ii] = pwd[ii];
+			else
+				sk[ii] = ii;
+		}
+		return new SecretKeySpec(sk, "AES");
 	}
 }

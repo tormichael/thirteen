@@ -139,8 +139,8 @@ public class tRegister
     		InputStream in = new FileInputStream(new File(aFileName));
     		ByteArrayOutputStream out = new ByteArrayOutputStream();
     		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-    		SecretKey kc = new SecretKeySpec(aKey.getBytes(), "AES");
-    		cipher.init(Cipher.DECRYPT_MODE, kc);
+    		//SecretKey kc = new SecretKeySpec(aKey.getBytes(), "AES");
+    		cipher.init(Cipher.DECRYPT_MODE, Thirteen.getSecretKey(aKey));
     		Thirteen.Crypt(in, out, cipher);
     		in.close();
     		
@@ -196,9 +196,9 @@ public class tRegister
     		InputStream in = new StringBufferInputStream(wr.toString());
     		OutputStream out = new FileOutputStream(new File(aFileName));
     		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-    		SecretKey kc = new SecretKeySpec(aKey.getBytes(), "AES");
+    		//SecretKey kc = new SecretKeySpec(aKey.getBytes(), "AES");
     		//SecretKeyFactory kf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-    		cipher.init(Cipher.ENCRYPT_MODE, kc);
+    		cipher.init(Cipher.ENCRYPT_MODE, Thirteen.getSecretKey(aKey));
     		Thirteen.Crypt(in, out, cipher);
     		wr.close();
     		in.close();
