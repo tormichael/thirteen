@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import JCommonTools.Crypt;
 import tor.java.thirteen.Thirteen;
 
 @XmlRootElement (name = "ObjRegister")
@@ -140,8 +141,8 @@ public class tRegister
     		ByteArrayOutputStream out = new ByteArrayOutputStream();
     		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
     		//SecretKey kc = new SecretKeySpec(aKey.getBytes(), "AES");
-    		cipher.init(Cipher.DECRYPT_MODE, Thirteen.getSecretKey(aKey));
-    		Thirteen.Crypt(in, out, cipher);
+    		cipher.init(Cipher.DECRYPT_MODE, Crypt.getSecretKey(aKey));
+    		Crypt.Run(in, out, cipher);
     		in.close();
     		
 	 		JAXBContext jc = JAXBContext.newInstance(tRegister.class);
@@ -198,8 +199,8 @@ public class tRegister
     		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
     		//SecretKey kc = new SecretKeySpec(aKey.getBytes(), "AES");
     		//SecretKeyFactory kf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-    		cipher.init(Cipher.ENCRYPT_MODE, Thirteen.getSecretKey(aKey));
-    		Thirteen.Crypt(in, out, cipher);
+    		cipher.init(Cipher.ENCRYPT_MODE, Crypt.getSecretKey(aKey));
+    		Crypt.Run(in, out, cipher);
     		wr.close();
     		in.close();
     		out.close();
