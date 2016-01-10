@@ -1,6 +1,7 @@
 package tor.java.thirteen.card;
 
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -191,10 +192,11 @@ public class tRegister
     		JAXBContext context = JAXBContext.newInstance(tRegister.class);
     		Marshaller m = context.createMarshaller();
     		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-    		Writer wr = new StringWriter(); 
+    		StringWriter wr = new StringWriter();
     		m.marshal( this, wr);
 
-    		InputStream in = new StringBufferInputStream(wr.toString());
+    		//InputStream in = new StringBufferInputStream(wr.toString());
+    		InputStream in = new ByteArrayInputStream(wr.toString().getBytes("UTF-8"));
     		OutputStream out = new FileOutputStream(new File(aFileName));
     		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
     		//SecretKey kc = new SecretKeySpec(aKey.getBytes(), "AES");
