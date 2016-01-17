@@ -291,4 +291,19 @@ public class tPerson extends tObj
 	{
 		return _sex == SEX_WOMEN ? SEX_WOMEN_SYMBOL : (_sex == SEX_MAN ? SEX_MAN_SYMBOL : CC.STR_EMPTY);
 	}
+	
+	public void ReplaceFirstLastName()
+	{
+		String ln = _lame;
+		_lame = _fame;
+		_fame = ln;	
+	}
+	
+	public void ReplaceFirstLastNameIf()
+	{
+		if(_lame != null && _lame.length() > 0 && _fame != null && _fame.length() > 0)
+		{
+			ReplaceFirstLastName();
+		}
+	}
 }
