@@ -98,8 +98,12 @@ public class tPerson extends tObj
 	public String getBDay() {
 		return _bday;
 	}
-	public void setBDay(String bDay) {
-		_bday = bDay.trim();
+	public void setBDay(String bDay) 
+	{
+		if (bDay != null)
+			_bday = bDay.trim();
+		else
+			_bday = CC.STR_EMPTY;
 	}
 	public int getSex() {
 		return _sex;
