@@ -1,11 +1,20 @@
 package tor.java.thirteen.card;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.crypto.Cipher;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -18,14 +27,20 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+
+
+import javax.xml.transform.stream.StreamSource;
+
 //import sun.util.calendar.CalendarDate;
 //import sun.util.calendar.BaseCalendar.Date;
 import JCommonTools.CC;
+import JCommonTools.Crypt;
 
 @XmlRootElement (name = "Persona")
 public class tPerson extends tObj 
 {
 	public final static String FILE_EXTENTION = "per";
+	public final static String FILE_EXTENTION_CIPHER = "pes";
 	
 	public final static int SEX_UNKNOWN = 0;
 	public final static int SEX_WOMEN = 1;
@@ -182,7 +197,34 @@ public class tPerson extends tObj
     	return ret;
 		
 	}
-	
+
+ 	public static tPerson LoadCipher(String aFileName, String aKey)
+ 	{
+		tPerson ret = null;
+    	try
+    	{
+    		InputStream in = new FileInputStream(new File(aFileName));
+    		ByteArrayOutputStream out = new ByteArrayOutputStream();
+    		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+    		cipher.init(Cipher.DECRYPT_MODE, Crypt.getSecretKey(aKey));
+    		Crypt.Run(in, out, cipher);
+    		in.close();
+    		
+	 		JAXBContext jc = JAXBContext.newInstance(tPerson.class);
+	        Unmarshaller u = jc.createUnmarshaller();
+	        StringBuffer xmlStr = new StringBuffer(new String(out.toByteArray(),"UTF-8"));
+	        Object o = u.unmarshal( new StreamSource( new StringReader( xmlStr.toString() ) ) ); 		
+    		ret = (tPerson) o;
+
+    		out.close();
+    	}
+    	catch (Exception ex)
+    	{
+    		ex.printStackTrace();
+    	}
+    	return ret;
+ 	}
+ 	
 	public String Save (String aFileName)
 	{
 		String ret = null;
@@ -205,8 +247,34 @@ public class tPerson extends tObj
     	return ret;
 	}
 	
+	public String SaveCipher (String aFileName, String aKey)
+	{
+		String ret = null;
+    	try
+    	{
+    		JAXBContext context = JAXBContext.newInstance(tPerson.class);
+    		Marshaller m = context.createMarshaller();
+    		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+    		StringWriter wr = new StringWriter();
+    		m.marshal( this, wr);
 
-    
+    		InputStream in = new ByteArrayInputStream(wr.toString().getBytes("UTF-8"));
+    		OutputStream out = new FileOutputStream(new File(aFileName));
+    		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+    		cipher.init(Cipher.ENCRYPT_MODE, Crypt.getSecretKey(aKey));
+    		Crypt.Run(in, out, cipher);
+    		wr.close();
+    		in.close();
+    		out.close();
+    	}
+    	catch (Exception ex)
+    	{
+    		ret = ex.getMessage();
+    	}
+    	
+    	return ret;
+	 }
+
 	public java.util.Calendar getDBCalendar()
 	{
 		
