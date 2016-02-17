@@ -28,7 +28,7 @@ public class tObj
 	/***
 	 * Type object: person, organization, car, building or other
 	 */
-	protected Integer			Type;
+	//protected static Integer			Type = 0;
 	/**
 	 * note about object or other common object's information 
 	 */
@@ -46,14 +46,14 @@ public class tObj
     {
     	Name = aName;
     }
-    public Integer getType ()
+    public static Integer getType ()
     {
-    	return Type;
+    	return 0;
     }
-    public void setType(Integer aType)
-    {
-    	Type = aType;
-    }
+//    public static void setType(Integer aType)
+//    {
+//    	Type = aType;
+//    }
 	public String getNote() 
 	{
 		return Note;
@@ -87,7 +87,6 @@ public class tObj
 	
 	public tObj()
 	{
-		Type = 0; // abstract
     	Images =new ArrayList<tBin>();
     	
 		//mRsr = ResourceBundle.getBundle(Autumn.FN_RESOURCE_TEXT, Locale.getDefault());

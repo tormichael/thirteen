@@ -1,0 +1,5 @@
+Object types:
+	0 [tObj] abstract object, base for other
+	1 [tPerson] person
+	2 [tOrg] organization
+	

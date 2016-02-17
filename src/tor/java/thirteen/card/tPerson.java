@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import javax.xml.transform.stream.StreamSource;
 
+
 //import sun.util.calendar.CalendarDate;
 //import sun.util.calendar.BaseCalendar.Date;
 import JCommonTools.CC;
@@ -91,6 +92,10 @@ public class tPerson extends tObj
      */
     private ArrayList<tDoc> DocColl;
     
+    public static Integer getType ()
+    {
+    	return 1;
+    }
     
     public String getLName() {
 		return _lame;
@@ -153,7 +158,6 @@ public class tPerson extends tObj
 	
 	public tPerson(String aLName, String aFName, String aPName, String aBDay, int aSex)
     {
-		Type = 1;
     	_lame = aLName;
     	_fame = aFName;
     	_pame = aPName;
