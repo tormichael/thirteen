@@ -25,6 +25,11 @@ public class tOrg extends tObj
 	 */
 	private String _fame;
 
+	/**
+	 * form of ownership
+	 */
+	private int _own;
+	
     /** 
      * organization contacts (phones, address, email, www and so on) collection 
      */
@@ -58,6 +63,11 @@ public class tOrg extends tObj
 		_fame = aFullName.trim();
 	}
 
+	public int getFormOwnership()
+	{
+		return _own;
+	}
+	
     @XmlElementWrapper (name = "ContactColl")
     @XmlElement (name = "tVTN")
 	public ArrayList<tVTN> getContactColl() {
