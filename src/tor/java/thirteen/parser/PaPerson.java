@@ -37,7 +37,7 @@ public class PaPerson extends Parser
 		boolean ret = super._run();
 		if (mPI.length == 3)
 		{
-			if (mFormat.equals(FMT_F_I_O))
+			if (mFormat != null &&  mFormat.equals(FMT_F_I_O))
 			{
 				_prs.setLName(getValue(0));
 				_prs.setFName(getValue(1));

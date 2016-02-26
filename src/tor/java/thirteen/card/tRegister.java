@@ -48,7 +48,6 @@ public class tRegister
 	private Date _dateLastModified;
 	
 	private String _rbFN;
-	private String _bpFN;
 
     private ArrayList<tObj> _objColl;
 	
@@ -75,17 +74,12 @@ public class tRegister
 	public void setRefBookFileName(String _rbFN) {
 		this._rbFN = _rbFN;
 	}
-	public String getBookParamFileName() {
-		return _bpFN;
-	}
-	public void setBookParamFileName(String _bpFN) {
-		this._bpFN = _bpFN;
-	}
 	
 	@XmlElementWrapper (name = "ObjColl")
     @XmlElements ({
 		@XmlElement (name = "Obj", type =tObj.class),
-		@XmlElement (name = "Person", type = tPerson.class)
+		@XmlElement (name = "Person", type = tPerson.class),
+		@XmlElement (name = "Org", type = tOrg.class)
     })
     public ArrayList<tObj> getObjColl()
     {
@@ -99,7 +93,6 @@ public class tRegister
     public tRegister()
     {
     	_rbFN = null;
-    	_bpFN = null;
     	_dateCreated = Calendar.getInstance().getTime();
     	_dateLastModified = Calendar.getInstance().getTime();
     	_objColl = new ArrayList<tObj>();
@@ -169,7 +162,8 @@ public class tRegister
 		{
 	    	try
 	    	{
-	    		JAXBContext context = JAXBContext.newInstance(tRegister.class);
+	        	_dateLastModified = Calendar.getInstance().getTime();
+	        	JAXBContext context = JAXBContext.newInstance(tRegister.class);
 	    		Marshaller m = context.createMarshaller();
 	    		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 	    		m.marshal(this, new File(aFileName));
@@ -189,7 +183,8 @@ public class tRegister
 		
     	try
     	{
-    		JAXBContext context = JAXBContext.newInstance(tRegister.class);
+        	_dateLastModified = Calendar.getInstance().getTime();
+        	JAXBContext context = JAXBContext.newInstance(tRegister.class);
     		Marshaller m = context.createMarshaller();
     		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
     		StringWriter wr = new StringWriter();

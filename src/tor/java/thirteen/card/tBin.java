@@ -90,7 +90,8 @@ public class tBin
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try
 			{
-				ImageIO.write(bi, "jpg", baos);
+				//ImageIO.write(bi, "jpg", baos); PNG
+				ImageIO.write(bi, "PNG", baos); 
 				baos.flush();
 				Bin = baos.toByteArray();
 			}
